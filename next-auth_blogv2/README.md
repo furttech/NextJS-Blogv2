@@ -16,21 +16,29 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+------------------------------------------------------------------------------------------------------------------------
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project is an extension from the original getting started with nextjs tutorial. After reaching a point in development that required a complete rewrite to allow multi user profiles and user follow/blocking the decision was made to move all code from NEXTJS/APPROUTER/NEXT_AUTH-BLOG into a proper repo structure called NEXT_AUTH-BLOGV2. All future changes will occur within this repo to isolate development and allow for collaboration, branching and merging of the repo proper.
 
-## Learn More
+Note: This repo is now decoupled from the NEXTJS repo to allow git to function properly without pulling the entire NEXTJS repo. Issues with the old folder/repo layout caused git to pull/fetch the entire NEXTJS repo, commit, changes etc. This was a mistake on my part setting up the projects initially..
 
-To learn more about Next.js, take a look at the following resources:
+------------------------------------------------------------------------------------------------------------------------
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-- INFO --
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Project Creator: Furt_Tech
+Name(Temporary): Social App Blog v2 
 
-## Deploy on Vercel
+-- Stack --
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Nodejs / Nextjs 14 / NextAuth (AuthJs) v5 / Prisma (ORM) / Postgres SQL (DB)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-- Details --
+
+The Goal of this project is to build a fully functional social media application within nextjs 14 in order to build an understanding and provide the community with an open source learning resource!
+
+This is (at this point) not intended to be deployed as full scale public prod because it does not have cache, scaling or load balancing. However, future releases may result in additional features to address these issues by implementing the required functionality as time allots.
+
+Thank you for checking out muh code... It sucks.. bare with me.
+
+- FurtTech

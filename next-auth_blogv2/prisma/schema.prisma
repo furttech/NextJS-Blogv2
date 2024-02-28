@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+// postgresql://USER:PASSWORD@HOST:PORT/tester9000?schema=SCHEMA
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+/// ### Post Models Used for Blog Posts Content Storage
+
+
+model Profile {
+    id                String   @id @default(cuid()) // Primary Key : Tied to relational models with Foreign Keys
+    profileVisibility String?
+    image           String?
+    about             String?
+    interest          String?
+    topics            String[]
+
+    posts         Post[]
+    following     FollowedAccount[]
+    blocked       BlockedAccount[]
+
+    // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
+    userAcct User   @relation(fields: [userId], references: [id])
+    userId   String @unique
+}
+
+model Post {
+    id        String   @id @default(cuid())
+    title     String
+    postDate  DateTime @db.Date
+    content   String?
+    image     String?
+    tags      String?
+    published Boolean  @default(false)
+
+    // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
+    author   Profile   @relation(fields: [authorId], references: [id])
+    authorId String
+}
+
+model FollowedAccount {
+    id                String   @id @default(cuid())
+    f_AccountName     String?  @unique
+    f_Date            DateTime @db.Date
+    f_accountId       String
+    f_accountEmail    String?
+    f_accountUserName String?
+
+    // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
+    profileAcct Profile  @relation(fields: [profileId], references: [id])
+    profileId   String
+}
+
+model BlockedAccount {
+    id                String   @id @default(cuid())
+    b_AccountName     String?  @unique
+    b_Date            DateTime @db.Date
+    b_accountId       String
+    b_accountEmail    String?
+    b_accountUserName String?
+
+    // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
+    profileAcct Profile  @relation(fields: [profileId], references: [id])
+    profileId   String
+}
+
+
+//// ### Account Models and Oauth Models ### ////
+model User {
+    id            String            @id @default(cuid())
+    name          String?
+    username      String?           @unique
+    password      String?
+    email         String?           @unique
+    emailVerified DateTime?
+    image         String?
+    profile       Profile?
+    accounts      Account[]
+    sessions      Session[]
+}
+
+model Account {
+    id                 String  @id @default(cuid())
+    userId             String  @map("user_id")
+    type               String
+    provider           String
+    providerAccountId  String  @map("provider_account_id")
+    refresh_token      String?
+    access_token       String?
+    expires_at         Int?
+    token_type         String?
+    scope              String?
+    id_token           String?
+    session_state      String?
+    oauth_token_secret String?
+    oauth_token        String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique @map("session_token")
+    userId       String   @map("user_id")
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+    id         Int      @id @default(autoincrement())
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
