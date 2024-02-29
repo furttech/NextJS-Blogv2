@@ -1,18 +1,62 @@
 -- CreateTable
+CREATE TABLE "Profile" (
+    "id" TEXT NOT NULL,
+    "profileVisibility" TEXT,
+    "image" TEXT,
+    "about" TEXT,
+    "interest" TEXT,
+    "topics" TEXT[],
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Post" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "postDate" DATE NOT NULL,
     "content" TEXT,
+    "image" TEXT,
+    "tags" TEXT,
     "published" BOOLEAN NOT NULL DEFAULT false,
-    "authorId" TEXT,
+    "profileId" TEXT NOT NULL,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "FollowedAccount" (
+    "id" TEXT NOT NULL,
+    "f_AccountName" TEXT,
+    "f_Date" DATE NOT NULL,
+    "f_accountId" TEXT NOT NULL,
+    "f_accountEmail" TEXT,
+    "f_accountUserName" TEXT,
+    "profileId" TEXT NOT NULL,
+
+    CONSTRAINT "FollowedAccount_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "BlockedAccount" (
+    "id" TEXT NOT NULL,
+    "b_AccountName" TEXT,
+    "b_Date" DATE NOT NULL,
+    "b_accountId" TEXT NOT NULL,
+    "b_accountEmail" TEXT,
+    "b_accountUserName" TEXT,
+    "profileId" TEXT NOT NULL,
+
+    CONSTRAINT "BlockedAccount_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "name" TEXT,
+    "username" TEXT,
+    "password" TEXT,
     "email" TEXT,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
@@ -61,6 +105,18 @@ CREATE TABLE "VerificationToken" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "FollowedAccount_f_AccountName_key" ON "FollowedAccount"("f_AccountName");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "BlockedAccount_b_AccountName_key" ON "BlockedAccount"("b_AccountName");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
@@ -76,7 +132,16 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
 -- AddForeignKey
-ALTER TABLE "Post" ADD CONSTRAINT "Post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Post" ADD CONSTRAINT "Post_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FollowedAccount" ADD CONSTRAINT "FollowedAccount_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BlockedAccount" ADD CONSTRAINT "BlockedAccount_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

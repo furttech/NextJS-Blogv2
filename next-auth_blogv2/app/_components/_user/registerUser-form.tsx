@@ -150,7 +150,7 @@ export default function Form( userDetails:RegisterUserForm ) {
           </div>
         </div>
         <Button type='submit' aria-describedby='sub-error' >Register</Button>
-        <div id='sub-error' aria-live='polite' aria-atomic='true'>
+        <div className=' text-red-500' id='sub-error' aria-live='polite' aria-atomic='true'>
           {
               state?.message
           }

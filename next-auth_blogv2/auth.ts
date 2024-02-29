@@ -3,10 +3,10 @@ import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import {z} from "zod";
 import bcrypt from 'bcrypt';
-import { fetchUserByEmail, setLocalUserSession } from "./app/_actions/userActions";
+import { fetchUserByEmail, setLocalUserProfile } from "./app/_actions/userActions";
 import GitHub from "next-auth/providers/github";
 
-export const {  auth, signIn, signOut} = NextAuth({
+export const { handlers:{GET,POST},  auth, signIn, signOut} = NextAuth({
     ...authConfig,
     providers: [
         Credentials({
@@ -24,7 +24,8 @@ export const {  auth, signIn, signOut} = NextAuth({
 
                     const passwordMatch = await bcrypt.compare(password, user.password!);
                     if(passwordMatch){
-                        setLocalUserSession(user.id);
+                        console.log("password Match");
+                        //setLocalUserProfile(user.id);
                         return user;
                     } 
                     

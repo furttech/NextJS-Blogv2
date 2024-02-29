@@ -27,6 +27,7 @@ Note: This repo is now decoupled from the NEXTJS repo to allow git to function p
 -- INFO --
 
 Project Creator: Furt_Tech
+
 Name(Temporary): Social App Blog v2 
 
 -- Stack --

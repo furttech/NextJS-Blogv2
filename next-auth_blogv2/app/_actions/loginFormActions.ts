@@ -1,12 +1,10 @@
 'use server'
 
 import { z } from 'zod';
-//import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '../../auth';
 import { AuthError } from 'next-auth';
-import { setLocalUserSession } from './userActions';
 
 const FormSubmit = z.object({
   email: z.string({
@@ -42,11 +40,11 @@ export async function authentication(prevState: State, formData: FormData) {
     }
   }
 
-
   try {
 
     const validSignIn:boolean = await signIn('credentials', userData.data);
- 
+    console.log("validation: "+ validSignIn);
+
   } catch (error) {
     if(error instanceof AuthError){
       switch (error.type){
@@ -74,6 +72,7 @@ export async function authentication(prevState: State, formData: FormData) {
     throw error;
   }
 
+  console.log("redirecting to blog!");
   revalidatePath('/blog');
   redirect('/blog');
 

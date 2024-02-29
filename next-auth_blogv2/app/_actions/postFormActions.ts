@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from "next/cache";
-import { userSessionEmail, userSessionId } from "./userActions";
+import { getProfileSessionId, userSessionEmail, userSessionId } from "./userActions";
 import prisma from "./prisma";
 import { z } from 'zod';
 import { redirect } from "next/navigation";
@@ -58,9 +58,9 @@ export async function fetchPostsPageCount(query?: string) {
         console.log("searching for post count");
 
         try {
-            const results = await prisma.user.findUnique({
+            const results = await prisma.profile.findUnique({
                 where: {
-                    id: userId,
+                    userId: userId,
                 },
                 select: {
                     _count: {
@@ -84,9 +84,9 @@ export async function fetchPostsPageCount(query?: string) {
         console.log('Searching for filtered posts => ', query);
 
         try {
-            const results = await prisma.user.findUnique({
+            const results = await prisma.profile.findUnique({
                 where: {
-                    id: userId,
+                    userId: userId,
                 },
                 select: {
                     _count: {
@@ -127,7 +127,7 @@ export async function fetchFollowPosts(currentPage?: number) {
         // prisma query fetches all follower Ids from current user
         const followedAcctIdList = await prisma.followedAccount.findMany({
             where: {
-                userId: {
+                profileId: {
                     equals: userId,
                 },
             }
@@ -137,7 +137,7 @@ export async function fetchFollowPosts(currentPage?: number) {
         if (followedAcctIdList.length > 0) {
 
             // create and array of objects to store fetched posts by follower Id
-            let PostList: Array<{ authorId: string, posts: Array<Post> }> = [];
+            let PostList: Array<{ profileId: string, posts: Array<Post> }> = [];
 
             // loop thru each of the followed users
             for (let i = 0; i < followedAcctIdList.length; i++) {
@@ -150,7 +150,7 @@ export async function fetchFollowPosts(currentPage?: number) {
                     where: {
                         AND: [
                             {
-                                authorId: {
+                                profileId: {
                                     equals: f_id,
                                 },
                             },
@@ -169,7 +169,7 @@ export async function fetchFollowPosts(currentPage?: number) {
                     // create an array of Post Objects demarcated by authorId (followed user id)
                     PostList[i] = {
                         // set follower user ID for each PostList
-                        authorId: f_id,
+                        profileId: f_id,
                         // set array of posts for each user
                         posts: followerPosts,
 
@@ -198,9 +198,9 @@ export async function fetchFilteredPosts(query: string, currentPage: number) {
         try {
             console.log('searching for all posts');
 
-            const results = await prisma.user.findUnique({
+            const results = await prisma.profile.findUnique({
                 where: {
-                    id: userId,
+                    userId: userId,
                 },
                 include: {
                     posts: {
@@ -223,7 +223,7 @@ export async function fetchFilteredPosts(query: string, currentPage: number) {
         console.log('Searching for filtered posts => ', query);
 
         try {
-            const results = await prisma.user.findUnique({
+            const results = await prisma.profile.findUnique({
                 where: {
                     id: userId
                 },
@@ -258,7 +258,7 @@ export async function fetchPublishedFilteredPosts(userId: string, currentPage: n
     try {
         console.log('searching for published filtered posts');
 
-        const results = await prisma.user.findUnique({
+        const results = await prisma.profile.findUnique({
             where: {
                 id: userId
             },
@@ -326,7 +326,7 @@ export async function addUserFollower(followerID: string) {
             data: {
                 f_accountId: followerID,
                 f_Date: currentDate,
-                userAcct: { connect: { id: userId } }
+                profileAcct: { connect: { id: userId } }
             }
         })
 
@@ -349,7 +349,7 @@ export async function editPostNav(postId: string) {
 export async function createPost(state: State, formData: FormData) {
 
     // fetch email from user session data
-    const userEmail: string | null | undefined = await userSessionEmail();
+    const profileId: string | null | undefined = await getProfileSessionId();
 
     // Get form data from Post creation
     const validateFields = createPostObject.safeParse({
@@ -377,7 +377,7 @@ export async function createPost(state: State, formData: FormData) {
 
     // attempt to create new post on DB, log error on failure
     try {
-        if (userEmail) {
+        if (profileId) {
             const result = await prisma.post.create({
                 data: {
                     title: validateFields.data.title,
@@ -387,7 +387,7 @@ export async function createPost(state: State, formData: FormData) {
                     postDate: currentDate,
                     image: validateFields.data.image,
                     // TODO:  change to user ID association instead of Email
-                    author: { connect: { email: userEmail } },
+                    profileAcct: { connect: { id: profileId } },
                 },
             });
         }

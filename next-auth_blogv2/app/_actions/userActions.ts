@@ -1,6 +1,6 @@
 'use server'
 
-import { User, Session } from "@prisma/client";
+import { User } from "@prisma/client";
 import prisma from "./prisma";
 import { auth } from "@/auth";
 
@@ -60,25 +60,30 @@ export async function userSessionEmail(){
 
 }
 
+export async function getProfileSessionId() {
+  const session = await auth();
+  const profileId = session?.user?.profileId;
+  return profileId;
+}
+
+
 /**
  * 
  * @param id user id linked to data base object retrieved from auth login credentials
  * @returns nothing
  */
-export async function setLocalUserSession(id:string){
+export async function setLocalUserProfile(id:string){
 
   try {
-      const userSession:(Session|null)[] = await prisma.session.findMany({
-        where:{
-          userId:id,
-        }
-      });
-
-      if(userSession[0] != null){
-        console.log("We have sessions baby!");
-      }
       
+    const userProfile = await prisma.profile.create({
+        data:{
+          userAcct: { connect: { id: id } },
+        }
 
+    });
+
+  
   } catch (error) {
     
   }

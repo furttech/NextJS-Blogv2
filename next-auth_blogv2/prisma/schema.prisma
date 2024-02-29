@@ -14,18 +14,17 @@ datasource db {
 
 /// ### Post Models Used for Blog Posts Content Storage
 
-
 model Profile {
     id                String   @id @default(cuid()) // Primary Key : Tied to relational models with Foreign Keys
     profileVisibility String?
-    image           String?
+    image             String?
     about             String?
     interest          String?
     topics            String[]
 
-    posts         Post[]
-    following     FollowedAccount[]
-    blocked       BlockedAccount[]
+    posts     Post[]
+    following FollowedAccount[]
+    blocked   BlockedAccount[]
 
     // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
     userAcct User   @relation(fields: [userId], references: [id])
@@ -42,8 +41,8 @@ model Post {
     published Boolean  @default(false)
 
     // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
-    author   Profile   @relation(fields: [authorId], references: [id])
-    authorId String
+    profileAcct Profile @relation(fields: [profileId], references: [id])
+    profileId   String
 }
 
 model FollowedAccount {
@@ -55,7 +54,7 @@ model FollowedAccount {
     f_accountUserName String?
 
     // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
-    profileAcct Profile  @relation(fields: [profileId], references: [id])
+    profileAcct Profile @relation(fields: [profileId], references: [id])
     profileId   String
 }
 
@@ -68,18 +67,17 @@ model BlockedAccount {
     b_accountUserName String?
 
     // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
-    profileAcct Profile  @relation(fields: [profileId], references: [id])
+    profileAcct Profile @relation(fields: [profileId], references: [id])
     profileId   String
 }
 
-
 //// ### Account Models and Oauth Models ### ////
 model User {
-    id            String            @id @default(cuid())
+    id            String    @id @default(cuid())
     name          String?
-    username      String?           @unique
+    username      String?   @unique
     password      String?
-    email         String?           @unique
+    email         String?   @unique
     emailVerified DateTime?
     image         String?
     profile       Profile?
