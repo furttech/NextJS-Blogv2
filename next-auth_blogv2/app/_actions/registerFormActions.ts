@@ -65,10 +65,38 @@ async function userExists(username: string):Promise<boolean>{
   return false;
 }
 
+/**
+ * 
+ * @param id user id linked to data base object retrieved from auth login credentials
+ * @returns nothing
+ */
+export async function setLocalUserProfile(user:User){
+
+  try {
+      
+    const userProfile = await prisma.profile.create({
+        data:{
+          name: user.name,
+          userAcct: { connect: { id: user.id } },
+        }
+
+    });
+
+  
+  } catch (error) {
+    
+  }
+}
+
 async function addUser(userData: FormUser){
 
     try {
-      const result:any = await prisma.user.create({data: userData})
+      // prisma ORM user creation
+      const user:User = await prisma.user.create({data: userData});
+      
+      // setup a local user profile
+      const result:any = await setLocalUserProfile(user);
+      
     } catch (error) {
       console.error('User Creation Failed',error);
       throw new Error('User Creation Failed.')

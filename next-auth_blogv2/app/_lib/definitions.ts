@@ -3,7 +3,7 @@
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 
-import { BlockedAccount, FollowedAccount, Profile } from "@prisma/client"
+import { BlockedAccount, FollowedAccount, Post, Profile, User } from "@prisma/client"
 
 export type RegisterUserForm = {
     username: string,
@@ -55,9 +55,15 @@ export type UserDisplayData = {
     blocked: boolean,
 }
 
-export type DiscoveryFetch = {
-    profile: Profile,
-    followerList: FollowedAccount[],
-    blockedList: BlockedAccount[],
-    
-}
+export type ProfileDiscovery = 
+Array<{
+    following:Array<FollowedAccount>,
+    blocked:Array<BlockedAccount>
+}&{
+    profileVisibility:string|null,
+    image:string|null,
+    about:string|null,
+    interest:string|null,
+    name:string|null,
+    topics:Array<string>|null
+}> | undefined 

@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from "next/cache";
-import { getProfileSessionId, userSessionEmail, userSessionId } from "./userActions";
+import { userSessionEmail, userSessionId } from "./userActions";
 import prisma from "./prisma";
 import { z } from 'zod';
 import { redirect } from "next/navigation";
@@ -260,7 +260,7 @@ export async function fetchPublishedFilteredPosts(userId: string, currentPage: n
 
         const results = await prisma.profile.findUnique({
             where: {
-                id: userId
+                userId: userId
             },
             include: {
                 posts: {
@@ -349,7 +349,7 @@ export async function editPostNav(postId: string) {
 export async function createPost(state: State, formData: FormData) {
 
     // fetch email from user session data
-    const profileId: string | null | undefined = await getProfileSessionId();
+    const userId: string | null | undefined = await userSessionId();
 
     // Get form data from Post creation
     const validateFields = createPostObject.safeParse({
@@ -377,7 +377,7 @@ export async function createPost(state: State, formData: FormData) {
 
     // attempt to create new post on DB, log error on failure
     try {
-        if (profileId) {
+        if (userId) {
             const result = await prisma.post.create({
                 data: {
                     title: validateFields.data.title,
@@ -387,7 +387,7 @@ export async function createPost(state: State, formData: FormData) {
                     postDate: currentDate,
                     image: validateFields.data.image,
                     // TODO:  change to user ID association instead of Email
-                    profileAcct: { connect: { id: profileId } },
+                    profileAcct: { connect: { userId: userId } },
                 },
             });
         }
@@ -403,8 +403,8 @@ export async function createPost(state: State, formData: FormData) {
         }
     }
 
-    revalidatePath('/blog/feed');
-    redirect('/blog/feed');
+    revalidatePath('/blog/manage');
+    redirect('/blog/manage');
 
 }
 
@@ -422,8 +422,8 @@ export async function deletePost(postData: string) {
             })
         }
 
-        revalidatePath('/blog/feed');
-        redirect('/blog/feed');
+        revalidatePath('/blog/manage');
+        redirect('/blog/manage');
 
     } catch (error) {
 
@@ -481,6 +481,6 @@ export async function updatePost(postId: string, state: State, formData: FormDat
 
     }
 
-    revalidatePath('/blog/feed');
-    redirect('/blog/feed');
+    revalidatePath('/blog/manage');
+    redirect('/blog/manage');
 }

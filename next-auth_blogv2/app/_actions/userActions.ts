@@ -1,6 +1,6 @@
 'use server'
 
-import { User } from "@prisma/client";
+import { Profile, User } from "@prisma/client";
 import prisma from "./prisma";
 import { auth } from "@/auth";
 
@@ -60,35 +60,6 @@ export async function userSessionEmail(){
 
 }
 
-export async function getProfileSessionId() {
-  const session = await auth();
-  const profileId = session?.user?.profileId;
-  return profileId;
-}
-
-
-/**
- * 
- * @param id user id linked to data base object retrieved from auth login credentials
- * @returns nothing
- */
-export async function setLocalUserProfile(id:string){
-
-  try {
-      
-    const userProfile = await prisma.profile.create({
-        data:{
-          userAcct: { connect: { id: id } },
-        }
-
-    });
-
-  
-  } catch (error) {
-    
-  }
-}
-
 /**
  * 
  * @param email login form user submitted email 
@@ -117,6 +88,29 @@ export async function fetchUserByEmail( email:string ): Promise<User|undefined> 
     throw new Error('Fetched By Email Failed.');
   }
 }
+
+export async function fetchUserProfile( uId:string ): Promise<Profile|undefined> {
+
+  // attempt to fetch user or throw error
+  try {
+    const profile: ( Profile | null ) = await prisma.profile.findUnique({
+        where: {
+          userId: uId,
+        }
+    });
+
+    if(!profile){
+        throw new Error('User Does Not Exist!');
+    }
+
+    return profile;
+
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw new Error('Fetched By Email Failed.');
+  }
+}
+
 
 /**
  * 

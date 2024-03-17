@@ -3,6 +3,7 @@
 import { fetchUserByEmail, userSessionEmail, userSessionIcon, userSessionId, userSessionUserName } from '@/app/_actions/userActions';
 import { lusitana } from '../fonts';
 import { User } from '@prisma/client';
+import { EditUserProfile } from './userButton';
 
 export default async function UserDetails(){
     
@@ -10,22 +11,7 @@ export default async function UserDetails(){
     const userName:( string | null | undefined ) = await userSessionUserName();
     const email:( string | null | undefined ) = await userSessionEmail();
     const icon:( string | null | undefined ) = await userSessionIcon();
-    const id:( string ) = await userSessionId();
-
-    // random inits for accessing user data from email.
-   
-    /* 
-    // Note:
-    // naming individually is verbose and wasteful coding 
-    // utilizing a single object with predefined class provides
-    // structured clean code.
-
-    let d_email:( string | null | undefined ) = "";
-    let d_userName:( string | null | undefined ) = "";
-    let d_icon:( string | null | undefined ) = "";
-    let d_isVerified:( Date | null | undefined ) = null;
-    let d_name:( string | null | undefined ) = "";
-    */
+    const id:( string | undefined ) = await userSessionId();
 
     let userData: ( User | undefined );
 
@@ -98,6 +84,13 @@ export default async function UserDetails(){
                     <label className={`${lusitana.className} mb-3 mt-5 block text-2xl font-medium text-gray-900`}>
                     DataBase Id:  {userData?.id}
                     </label>
+                </div>
+                <div>
+                    <h1 className='text-black'>This is a Change!</h1>
+                </div>
+                <div className='relative'>
+                    <h1>Edit User Profile</h1>
+                    <EditUserProfile />
                 </div>
             </div>
         </div>

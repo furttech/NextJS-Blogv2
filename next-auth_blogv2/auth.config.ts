@@ -1,9 +1,9 @@
 
 import type { NextAuthConfig } from "next-auth";
 
+
 export const authConfig = {
     pages: {
-        newUser: '/register',
         signIn: '/login',
     },
     session: {
@@ -15,16 +15,18 @@ export const authConfig = {
             const isOnFeed = nextUrl.pathname.startsWith('/blog');
             
             if(isOnFeed){
-                console.log("is on feed check!")
+                console.log("is on feed check! : Login : %s", isLoggedIn);
                 return isLoggedIn;
 
             } else if (isLoggedIn){
-                console.log("is logged in checked!")
+                console.log("login checked!");
                 return Response.redirect(new URL('/blog', nextUrl));
             }
         },
         session({session,token}){
-          
+            
+            console.log("Session Expires: %s",session.expires);
+
             if(session.user){
                 if(token.email){
                     session.user.email = token.email;
@@ -32,15 +34,16 @@ export const authConfig = {
                 session.user.name = token.name;
                 session.user.image = token.picture;
                 session.user.id = token.id as string; 
-                //session.user.profileId = token.profileId as string;
             }
             return session;
         },
-        jwt({ token, user}) {
+        async jwt({ token, user}) {
+
             // Persist the OAuth access_token to the token right after signin
             if (user) {
                 token.id = user.id;
-                //token.profileId = user.profile.id;
+                token.email = user.email;
+                token.name = user.name;
             }
             
             return token;

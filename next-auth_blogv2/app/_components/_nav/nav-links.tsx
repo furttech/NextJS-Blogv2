@@ -33,7 +33,7 @@ const links = [
   },
   {
     name: 'Published Feed',
-    href: '/blog/Published',
+    href: '/blog/published',
     icon: WindowIcon,
   },
   {

@@ -3,7 +3,7 @@ import { Post } from "@prisma/client";
 
 export default async function FollowerTable({ currentPage }: { currentPage: number }) {
 
-    const postList: Array<{ authorId: string, posts: Array<Post> }> | undefined = await fetchFollowPosts(currentPage);
+    //const postList: Array<{ authorId: string, posts: Array<Post> }> | undefined = await fetchFollowPosts(currentPage);
 
     return (
 

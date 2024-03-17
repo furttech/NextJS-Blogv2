@@ -1,6 +1,5 @@
 'use server'
 
-import { UserDisplayData } from "../_lib/definitions";
 import prisma from "./prisma";
 
 const ITEMS_PER_PAGE = 6;
@@ -11,20 +10,20 @@ export async function fetchUserDiscovery(currentPage: number) {
 
     try {
 
-        const userResults = await prisma.user.findMany({
+        const profileResults = await prisma.profile.findMany({
 
             include: {
                 following: true,
                 blocked: true,
-                profile: true,
             },
             take: ITEMS_PER_PAGE,
             skip: offSet,
         });
 
-        //userResults[0].
 
-        return userResults;
+        console.log("User Name: ", profileResults[0].name);
+
+        return profileResults;
 
     } catch (error) {
 
@@ -32,8 +31,10 @@ export async function fetchUserDiscovery(currentPage: number) {
 
 }
 
-export function discoveryList(currentPage: number) {
+/*
+export async function discoveryList(currentPage: number) {
 
 
     
 }
+*/

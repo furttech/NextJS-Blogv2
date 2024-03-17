@@ -4,7 +4,6 @@ import { createPost } from "@/app/_actions/postFormActions";
 import { useFormState } from "react-dom";
 import { lusitana } from "../../fonts";
 import { BookOpenIcon, ComputerDesktopIcon, HashtagIcon, PhotoIcon, PencilIcon, PaperClipIcon } from "@heroicons/react/24/outline";
-import { CreatePostForm } from "@/app/_lib/definitions";
 import { Button } from "../../_nav/button";
 
 export default function PostCreateForm() {
@@ -199,7 +198,7 @@ export default function PostCreateForm() {
                 <div className="flex justify-end gap-1.5 py-3">
                     {/*!-- Submit Button --!*/}
                     <Button type='submit' aria-describedby='sub-error' >Create Post</Button>
-                    <div id='sub-error' aria-live='polite' aria-atomic='true'>
+                    <div className="text-redd-500" id='sub-error' aria-live='polite' aria-atomic='true'>
                         {
                             state?.message
                         }

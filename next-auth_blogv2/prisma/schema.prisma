@@ -8,8 +8,9 @@ generator client {
 // postgresql://USER:PASSWORD@HOST:PORT/tester9000?schema=SCHEMA
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider          = "postgresql"
+    url               = env("DATABASE_URL")
+    shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 /// ### Post Models Used for Blog Posts Content Storage
@@ -20,6 +21,7 @@ model Profile {
     image             String?
     about             String?
     interest          String?
+    name              String?
     topics            String[]
 
     posts     Post[]
@@ -27,7 +29,7 @@ model Profile {
     blocked   BlockedAccount[]
 
     // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
-    userAcct User   @relation(fields: [userId], references: [id])
+    userAcct User   @relation(fields: [userId], references: [id],  onDelete: Cascade)
     userId   String @unique
 }
 
@@ -41,7 +43,7 @@ model Post {
     published Boolean  @default(false)
 
     // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
-    profileAcct Profile @relation(fields: [profileId], references: [id])
+    profileAcct Profile @relation(fields: [profileId], references: [id],  onDelete: Cascade)
     profileId   String
 }
 
@@ -54,7 +56,7 @@ model FollowedAccount {
     f_accountUserName String?
 
     // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
-    profileAcct Profile @relation(fields: [profileId], references: [id])
+    profileAcct Profile @relation(fields: [profileId], references: [id],  onDelete: Cascade)
     profileId   String
 }
 
@@ -67,7 +69,7 @@ model BlockedAccount {
     b_accountUserName String?
 
     // Annotated Relation Feilds connecting Foreign Key with Primary Key in User Model
-    profileAcct Profile @relation(fields: [profileId], references: [id])
+    profileAcct Profile @relation(fields: [profileId], references: [id],  onDelete: Cascade)
     profileId   String
 }
 

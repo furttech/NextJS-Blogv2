@@ -1,8 +1,6 @@
 'use server'
 
 import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { signIn } from '../../auth';
 import { AuthError } from 'next-auth';
 
@@ -26,6 +24,7 @@ export type State = {
   message?: string | null;
   context?: string | null;
 }
+
 export async function authentication(prevState: State, formData: FormData) {
   
   const userData = FormSubmit.safeParse( {
@@ -71,9 +70,5 @@ export async function authentication(prevState: State, formData: FormData) {
     }
     throw error;
   }
-
-  console.log("redirecting to blog!");
-  revalidatePath('/blog');
-  redirect('/blog');
 
 }

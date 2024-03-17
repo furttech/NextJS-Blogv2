@@ -36,9 +36,9 @@ Nodejs / Nextjs 14 / NextAuth (AuthJs) v5 / Prisma (ORM) / Postgres SQL (DB)
 
 -- Details --
 
-The Goal of this project is to build a fully functional social media application within nextjs 14 in order to build an understanding and provide the community with an open source learning resource!
+The Goal of this project is to build a fully functional social media application within nextjs 14 in order to build understanding and provide the community with an open source learning resource!
 
-This is (at this point) not intended to be deployed as full scale public prod because it does not have cache, scaling or load balancing. However, future releases may result in additional features to address these issues by implementing the required functionality as time allots.
+This is (at this point) not intended to be deployed as full scale public prod because it does not have cache, scalability, load balancing, optimization or basically anything to be production ready... However, future releases may result in additional features to address these issues by implementing the required functionality as time allots. Just to do it.. because i can...
 
 Thank you for checking out muh code... It sucks.. bare with me.
 

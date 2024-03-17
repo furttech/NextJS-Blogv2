@@ -3,7 +3,7 @@ import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import {z} from "zod";
 import bcrypt from 'bcrypt';
-import { fetchUserByEmail, setLocalUserProfile } from "./app/_actions/userActions";
+import { fetchUserByEmail, fetchUserProfile } from "./app/_actions/userActions";
 import GitHub from "next-auth/providers/github";
 
 export const { handlers:{GET,POST},  auth, signIn, signOut} = NextAuth({
@@ -20,12 +20,13 @@ export const { handlers:{GET,POST},  auth, signIn, signOut} = NextAuth({
                     
                     const password = parseCredentials.password;
                     const user = await fetchUserByEmail(parseCredentials.email);
+
                     if(!user) return null;
 
                     const passwordMatch = await bcrypt.compare(password, user.password!);
+                    
                     if(passwordMatch){
                         console.log("password Match");
-                        //setLocalUserProfile(user.id);
                         return user;
                     } 
                     
