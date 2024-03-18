@@ -1,11 +1,11 @@
 'use server'
 
 import { fetchUserByEmail, userSessionEmail, userSessionIcon, userSessionId, userSessionUserName } from '@/app/_actions/userActions';
-import { lusitana } from '../fonts';
+import { lusitana } from '../../fonts';
 import { User } from '@prisma/client';
-import { EditUserProfile } from './userButton';
+import { EditUserCredentials, EditUserProfile } from './userButton';
 
-export default async function UserDetails(){
+export default async function UserDetailsForm(){
     
     // fetching session data
     const userName:( string | null | undefined ) = await userSessionUserName();
@@ -86,10 +86,11 @@ export default async function UserDetails(){
                     </label>
                 </div>
                 <div>
-                    <h1 className='text-black'>This is a Change!</h1>
+                    <h1 className='text-black'>Edit Credentials</h1>
+                    <EditUserCredentials />
                 </div>
                 <div className='relative'>
-                    <h1>Edit User Profile</h1>
+                    <h2 className='text-black'>Edit User Profile</h2>
                     <EditUserProfile />
                 </div>
             </div>

@@ -1,6 +1,6 @@
 'use server'
 
-import { fetchFilteredPosts } from "@/app/_actions/postFormActions";
+import { fetchFilteredPosts } from "@/app/_actions/_postActions/postFormActions";
 import { Post } from "@prisma/client";
 import { DeletePost, EditPost } from "./postButtons";
 

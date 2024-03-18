@@ -52,12 +52,9 @@ export async function userSessionEmail(){
 
   if( session && session.user){
     const email = session.user.email;
-    return email;
-  }else{
-    return "user@email.com";
+    if(email) return email;
   }
-
-
+  return "user@email.com";
 }
 
 /**

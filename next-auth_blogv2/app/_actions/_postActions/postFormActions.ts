@@ -1,12 +1,12 @@
 'use server'
 
 import { revalidatePath } from "next/cache";
-import { userSessionEmail, userSessionId } from "./userActions";
-import prisma from "./prisma";
+import { userSessionEmail, userSessionId } from "../userActions";
+import prisma from "../prisma";
 import { z } from 'zod';
 import { redirect } from "next/navigation";
 import { Post } from "@prisma/client";
-import { CreatePostForm } from "../_lib/definitions";
+import { CreatePostForm } from "../../_lib/definitions";
 
 
 const ITEMS_PER_PAGE = 6;
@@ -336,7 +336,6 @@ export async function addUserFollower(followerID: string) {
     }
 
 }
-
 
 export async function editPostNav(postId: string) {
 

@@ -1,4 +1,4 @@
-import { fetchUserDiscovery } from "@/app/_actions/discoveryActions";
+import { fetchUserDiscovery } from "@/app/_actions/_postActions/discoveryActions";
 import { ProfileDiscovery } from "@/app/_lib/definitions";
 import Image from "next/image";
 import UserImage from "@/public/images/user.png";

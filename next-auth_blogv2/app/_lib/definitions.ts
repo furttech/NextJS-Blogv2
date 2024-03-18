@@ -3,7 +3,7 @@
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 
-import { BlockedAccount, FollowedAccount, Post, Profile, User } from "@prisma/client"
+import { BlockedAccount, FollowedAccount } from "@prisma/client"
 
 export type RegisterUserForm = {
     username: string,
@@ -12,12 +12,14 @@ export type RegisterUserForm = {
     cmp_password: string,
 }
 
-export type UpdateUserForm = {
-    username: string,
+export type UpdateEmailForm = {
     email: string,
-    password: string,
-    image: string,
+}
 
+export type UpdatePasswordForm = {
+    ver_password: string,
+    password: string,
+    cmp_password:string,
 }
 
 export type FormUser = {
@@ -54,6 +56,16 @@ export type UserDisplayData = {
     following: boolean,
     blocked: boolean,
 }
+
+export type ProfileDetailsForm ={
+    profileVisibility?:string,
+    name?:string,
+    about?:string,
+    interest?:string,
+    image?:string,
+    topics?: Array<string>,
+}
+
 
 export type ProfileDiscovery = 
 Array<{

@@ -1,5 +1,5 @@
 import PostTable from "@/app/_components/_blog/_privateFeed/postPrivateTable";
-import { fetchPostsPageCount } from "@/app/_actions/postFormActions";
+import { fetchPostsPageCount } from "@/app/_actions/_postActions/postFormActions";
 import Search from "@/app/(public_zone)/(private_zone)/search";
 import Breadcrumbs from "@/app/_components/_nav/breadcrumbs";
 

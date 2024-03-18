@@ -1,4 +1,4 @@
-import UserDetails from "@/app/_components/_user/user-details";
+import UserDetailsForm from "@/app/_components/_blog/_profile/userDetails-form";
 import Breadcrumbs from "@/app/_components/_nav/breadcrumbs";
 
 export default function Page() {
@@ -15,7 +15,7 @@ export default function Page() {
                 ]} />
             <div className="flex flex-col flex-auto">
                 <div className="w-full">
-                    <UserDetails />
+                    <UserDetailsForm />
                 </div>
             </div>
         </main>

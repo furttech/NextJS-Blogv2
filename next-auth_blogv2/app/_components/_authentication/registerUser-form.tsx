@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/_components/_nav/button';
 import { useFormState } from 'react-dom';
-import { registerUser } from '@/app/_actions/registerFormActions';
+import { registerUser } from '@/app/_actions/_authActions/registerFormActions';
 import { RegisterUserForm } from '@/app/_lib/definitions';
 import "@/app/(public_zone)/global.css";
 

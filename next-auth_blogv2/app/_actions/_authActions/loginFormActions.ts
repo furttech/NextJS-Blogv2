@@ -1,7 +1,7 @@
 'use server'
 
 import { z } from 'zod';
-import { signIn } from '../../auth';
+import { signIn } from '../../../auth';
 import { AuthError } from 'next-auth';
 
 const FormSubmit = z.object({

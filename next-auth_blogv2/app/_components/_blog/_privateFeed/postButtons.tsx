@@ -1,4 +1,4 @@
-import { deletePost, editPostNav } from "@/app/_actions/postFormActions";
+import { deletePost, editPostNav } from "@/app/_actions/_postActions/postFormActions";
 import { TrashIcon, DocumentPlusIcon } from "@heroicons/react/24/solid";
 
 export async function DeletePost({pid}:{pid: string}) {

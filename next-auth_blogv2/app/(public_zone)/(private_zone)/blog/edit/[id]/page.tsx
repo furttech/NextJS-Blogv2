@@ -2,7 +2,7 @@
 
 import PostEditForm from "@/app/_components/_blog/_privateFeed/postEdit-form";
 import React from "react";
-import { fetchSinglePostByID } from "@/app/_actions/postFormActions";
+import { fetchSinglePostByID } from "@/app/_actions/_postActions/postFormActions";
 import { CreatePostForm } from "@/app/_lib/definitions";
 import notFound from "./not-found";
 import Breadcrumbs from "@/app/_components/_nav/breadcrumbs";

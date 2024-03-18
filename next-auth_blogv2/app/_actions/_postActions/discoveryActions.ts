@@ -1,6 +1,6 @@
 'use server'
 
-import prisma from "./prisma";
+import prisma from "../prisma";
 
 const ITEMS_PER_PAGE = 6;
 

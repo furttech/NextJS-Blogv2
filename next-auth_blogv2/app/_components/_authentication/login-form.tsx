@@ -11,7 +11,7 @@ import { Button } from '@/app/_components/_nav/button';
 import { useFormState } from 'react-dom';
 import { useFormStatus } from 'react-dom';
 import { SignInUserForm } from '@/app/_lib/definitions';
-import { State, authentication } from '@/app/_actions/loginFormActions';
+import { State, authentication } from '@/app/_actions/_authActions/loginFormActions';
 import Link from 'next/link';
 
 export default function Form(formDetails:SignInUserForm) {

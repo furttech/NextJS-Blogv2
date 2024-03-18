@@ -1,6 +1,6 @@
 'use client'
 
-import { createPost } from "@/app/_actions/postFormActions";
+import { createPost } from "@/app/_actions/_postActions/postFormActions";
 import { useFormState } from "react-dom";
 import { lusitana } from "../../fonts";
 import { BookOpenIcon, ComputerDesktopIcon, HashtagIcon, PhotoIcon, PencilIcon, PaperClipIcon } from "@heroicons/react/24/outline";

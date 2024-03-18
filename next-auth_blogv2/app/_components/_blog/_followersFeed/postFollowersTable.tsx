@@ -1,4 +1,4 @@
-import { fetchFollowPosts } from "@/app/_actions/postFormActions"
+import { fetchFollowPosts } from "@/app/_actions/_postActions/postFormActions"
 import { Post } from "@prisma/client";
 
 export default async function FollowerTable({ currentPage }: { currentPage: number }) {
