@@ -2,7 +2,7 @@
 
 import { fetchFilteredPosts } from "@/app/_actions/_postActions/postFormActions";
 import { Post } from "@prisma/client";
-import { DeletePost, EditPost } from "./postButtons";
+import { DeletePost, EditPost } from "../../_formControl/postButtons";
 
 export default async function PostTable({ query, currentPage }: { query: string; currentPage: number; }) {
 

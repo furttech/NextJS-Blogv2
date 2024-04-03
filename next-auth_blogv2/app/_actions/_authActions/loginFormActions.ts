@@ -43,6 +43,11 @@ export async function authentication(prevState: State, formData: FormData) {
 
     const validSignIn:boolean = await signIn('credentials', userData.data);
     console.log("validation: "+ validSignIn);
+    return {
+      errors: {},
+      message: "",
+      context:"",
+    }
 
   } catch (error) {
     if(error instanceof AuthError){

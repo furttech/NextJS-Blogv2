@@ -158,7 +158,7 @@ export default function PostCreateForm() {
                                     aria-describedby='status-error'
                                 />
                                 <label
-                                    htmlFor="public"
+                                    htmlFor="public_published"
                                     className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-gray-600"
                                 >
                                     Publish to Feed <PencilIcon className="h-4 w-4" />
@@ -175,7 +175,7 @@ export default function PostCreateForm() {
                                     aria-describedby='status-error'
                                 />
                                 <label
-                                    htmlFor="private"
+                                    htmlFor="private_published"
                                     className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-red-500 px-3 py-1.5 text-xs font-medium text-white"
                                 >
                                     Private Edit <PaperClipIcon className="h-4 w-4" />

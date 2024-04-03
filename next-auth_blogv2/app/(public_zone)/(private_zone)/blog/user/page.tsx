@@ -8,7 +8,7 @@ export default function Page() {
             <Breadcrumbs
                 breadcrumbs={[
                     {
-                        label: 'User Settings',
+                        label: 'View User Details',
                         href: '/blog/user',
                         active: true,
                     },

@@ -2,7 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { useId } from "react";
 import { z } from "zod";
+import { userSessionId } from "../userActions";
 
 const VISIBILITY = ['Hidden', 'Public', 'Followers'] as const;
 
@@ -66,7 +68,15 @@ export type State = {
     message?: (string | null);
 }
 
+/**
+ * 
+ * @param prevState 
+ * @param formData 
+ * @returns 
+ */
 export async function updateProfile(prevState: State, formData: FormData) {
+
+    const uid = await userSessionId();
 
     const validateFields = UpdateProfile.safeParse({
         profileVisibility: formData.get('profileVisibility'),
@@ -81,6 +91,25 @@ export async function updateProfile(prevState: State, formData: FormData) {
             errors: validateFields.error.flatten().fieldErrors,
             message: 'Invalid Entries : Please Retry',
         }
+    }
+
+    try {
+        
+        const result = await prisma?.profile.update({
+            where:{
+                userId: uid,
+            },
+            data:{
+                profileVisibility:validateFields.data.profileVisibility,
+                name:validateFields.data.name,
+                about: validateFields.data.about,
+                interest:validateFields.data.interest,
+                topics: validateFields.data.topics,
+            }
+        })
+
+    } catch (error) {
+        
     }
 
     return ({ message: "success", })

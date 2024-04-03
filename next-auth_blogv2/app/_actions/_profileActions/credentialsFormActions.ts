@@ -10,6 +10,10 @@ const CreateEmail = z.object({
     required_error: 'Email is required.',
     invalid_type_error: 'Please enter a Valid email.'
   }).email({ message: "Enter a Valid Email." }),
+  password: z.string({
+    required_error: 'Password is Required',
+    invalid_type_error: 'Invalid Password'
+  }).min(10, { message: 'Minimum Length : 10' }),
 })
 
 const CreatePassWord = z.object({
@@ -47,9 +51,29 @@ export type State1 = {
 export type State2 = {
   errors?: {
     email?: string[];
+    password?: string[];
   };
   message?: string | null;
 }
+
+
+
+const verifyPassWord = async ({password}:{password:string;}) => {
+
+  try {
+
+
+    return{
+      errors:{},
+      message:""
+    };
+  } catch (error) {
+    console.error('Password Error : Failed', error);
+    throw new Error('Password Error : Failed.');
+  }
+
+}
+
 
 export async function updatePassWord(prevState: State1, formData: FormData) {
 
@@ -110,6 +134,7 @@ export async function updateEmail(prevState: State2, formData: FormData) {
 
   const validateFields = CreateEmail.safeParse({
     email: formData.get('email'),
+    password:formData.get('password')
   });
 
   if (!validateFields.success) {
@@ -164,10 +189,17 @@ export async function userProfileNav() {
 
 }
 
-export async function userCredentialsNav() {
+export async function userPassNav() {
 
   //const userId = await userSessionId();
 
-  redirect(`/blog/user/credentials/`);
+  redirect(`/blog/user/credentials/?show=pass`);
+
+}
+export async function userEmailNav() {
+
+  //const userId = await userSessionId();
+
+  redirect(`/blog/user/credentials/?show=email`);
 
 }

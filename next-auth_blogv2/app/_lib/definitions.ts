@@ -5,6 +5,10 @@
 
 import { BlockedAccount, FollowedAccount } from "@prisma/client"
 
+export type SearchParamProps = {
+    searchParams: Record<string, string> | null | undefined;
+};
+
 export type RegisterUserForm = {
     username: string,
     email: string,
@@ -12,14 +16,19 @@ export type RegisterUserForm = {
     cmp_password: string,
 }
 
+export type VerifyPassWordForm = {
+    password?: string | undefined,
+}
+
 export type UpdateEmailForm = {
-    email: string,
+    email?: string | undefined,
+    password?: string | undefined,
 }
 
 export type UpdatePasswordForm = {
-    ver_password: string,
-    password: string,
-    cmp_password:string,
+    ver_password?: string | undefined,
+    password?: string | undefined,
+    cmp_password?: string | undefined,
 }
 
 export type FormUser = {
